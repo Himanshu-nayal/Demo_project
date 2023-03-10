@@ -60,7 +60,7 @@ public class ItemController {
     @GetMapping("/search")
     public ResponseEntity<List<ItemDto>> searchItem(@RequestParam(required = false) String itemNumber,
                                                     @RequestParam(required = false) String itemName) {
-        List<ItemDto> items = itemService.searchItems(itemNumber,itemName);
+        List<Item> items = itemService.searchItems(itemNumber,itemName);
         List<ItemDto> itemDtos = items.stream().map(itemDto -> new ItemDto()).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(itemDtos);
