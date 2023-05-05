@@ -7,6 +7,7 @@ import com.example.user.Service.UserService.Exception.StoreNotFoundException;
 import com.example.user.Service.UserService.Repository.StoreRepository;
 import com.example.user.Service.UserService.Service.StoreService;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @Service
 @Transactional
+@Slf4j
 public class StoreServiceImpl implements StoreService {
     @Autowired
     StoreRepository storeRepository;
@@ -21,6 +23,7 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store createStore(StoreDto storeDto) throws StoreAlreadyExistsException {
         Optional<Store> optionalStore = storeRepository.findByStoreNo(storeDto.getStoreNo());
+        log.info("operational store value :{}", optionalStore);
         if(optionalStore.isPresent()){
             throw new StoreAlreadyExistsException();
         }
@@ -55,7 +58,7 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public Store deleteStore(Long id) {
         Store existingStore = storeRepository.findById(id).orElseThrow(StoreNotFoundException::new);
-        storeRepository.delete(existingStore);
-        return null;
+       storeRepository.delete(existingStore);
+       return null;
     }
 }

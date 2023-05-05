@@ -9,12 +9,14 @@ import com.example.user.Service.UserService.Repository.StoreRepository;
 import com.example.user.Service.UserService.Service.ItemService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 @Transactional
+@Slf4j
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;

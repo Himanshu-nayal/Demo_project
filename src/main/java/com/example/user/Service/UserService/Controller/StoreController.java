@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.util.Optional;
 
+import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat.URI;
+
 @RestController
 @RequestMapping("api/user")
-public class StoreController {
+public class StoreController extends java.lang.RuntimeException {
     @Autowired
     private StoreService storeService;
 
@@ -23,8 +25,8 @@ public class StoreController {
     ResponseEntity<Store> createStore(@RequestBody StoreDto storeDto) {
         try {
             Store store = storeService.createStore(storeDto);
-            return ResponseEntity.created(URI.create("api/user/" + store.getId())).body(store);
-        } catch (StoreAlreadyExistsException e) {
+            return ResponseEntity.created(com.sun.org.apache.xml.internal.utils.URI.create("api/user/" + store.getId())).body(store);
+        } catch ( StoreNotFoundException e) {
             return ResponseEntity.badRequest().build();
         }
     }
@@ -42,7 +44,7 @@ public class StoreController {
     @DeleteMapping("/delete/{storeId}")
     public ResponseEntity<Void> deleteStore(@PathVariable("storeId") Long id){
         try{
-            Store store=storeService.deleteStore(id);
+            String store= String.valueOf(storeService.deleteStore(id));
             return ResponseEntity.notFound().build();
         }
 
